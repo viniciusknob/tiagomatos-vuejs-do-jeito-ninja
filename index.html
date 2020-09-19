@@ -8,6 +8,7 @@
 <body>
     <div id="app">
         <h1>{{ title }}</h1>
+        <hr />
         <div v-if="user.id == 1">
             Id: {{ user.id }}, <br />
             Name: {{ user.name }}, <br />
@@ -16,6 +17,10 @@
         <div v-else>
             Nenhum usuário encontrado.
         </div>
+        <hr />
+        <ul>
+            <li v-for="item in languages">{{ item.name }}</li>
+        </ul>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
@@ -27,7 +32,14 @@
                     id: 1,
                     name: "Jon Snow",
                     occupation: "Actor"
-                }
+                },
+                languages: [
+                    { name: "JavaScript" },
+                    { name: "Java" },
+                    { name: "ShellScript" },
+                    { name: "Perl" },
+                    { name: "Python" },
+                ]
             }
         });
     </script>

@@ -8,13 +8,26 @@
 <body>
     <div id="app">
         <h1>{{ title }}</h1>
+        <div v-if="user.id == 1">
+            Id: {{ user.id }}, <br />
+            Name: {{ user.name }}, <br />
+            Occupation: {{ user.occupation }}
+        </div>
+        <div v-else>
+            Nenhum usuário encontrado.
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
             el: "#app",
             data: {
-                title: "Vue.js do Jeito Ninja"
+                title: "Vue.js do Jeito Ninja",
+                user: {
+                    id: 1,
+                    name: "Jon Snow",
+                    occupation: "Actor"
+                }
             }
         });
     </script>

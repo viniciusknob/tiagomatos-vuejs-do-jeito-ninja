@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vue.js do Jeito Ninja</title>
+
+    <style>
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #212529;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+        .btn-sm {
+            padding: .25rem .5rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .2rem;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -59,6 +96,10 @@
 
         <hr />
         <img v-bind:src="imgSrc" :alt="imgAlt">
+
+        <hr />
+        <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
+        <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -70,7 +111,7 @@
                 user: {
                     id: 1,
                     name: "Jon Snow",
-                    occupation: "Actor"
+                    occupation: "Actor",
                 },
                 languages: [
                     { name: "JavaScript" },
@@ -83,10 +124,24 @@
                     name: "",
                     news: "",
                     languages: [],
-                    directive: ""
+                    directive: "",
                 },
                 imgSrc: "https://vuejs.org/images/logo.png",
                 imgAlt: "Vue.js Logo",
+                btnClassLimpar: {
+                    'btn-danger': true,
+                    'btn-sm': true,
+                },
+                btnClassEnviar: [
+                    'btn-primary', { 'btn-lg': false },
+                ],
+                btnStyleLimpar: [
+                    { 'font-size': '50px' },
+                    { 'text-transform': 'lowercase' },
+                ],
+                btnStyleEnviar: {
+                    'font-size': '10px',
+                }
             }
         });
     </script>

@@ -56,6 +56,9 @@
                 Diretiva: {{ form.directive }}<br />
             </div>
         </form>
+
+        <hr />
+        <img v-bind:src="imgSrc" :alt="imgAlt">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -81,7 +84,9 @@
                     news: "",
                     languages: [],
                     directive: ""
-                }
+                },
+                imgSrc: "https://vuejs.org/images/logo.png",
+                imgAlt: "Vue.js Logo",
             }
         });
     </script>

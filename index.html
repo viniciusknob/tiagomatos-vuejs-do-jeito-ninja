@@ -64,7 +64,8 @@
         <hr />
         <form>
             <label for="name">Nome</label><br />
-            <input type="text" v-model="form.name"><br /><br />
+            <input type="text" v-model="form.firstName">
+            <input type="text" v-model="form.lastName"><br /><br />
 
             <label for="news">Deseja receber nossas novidades?</label><br />
             <input type="radio" value="Sim" v-model="form.news"> Sim<br />
@@ -87,7 +88,7 @@
             </select><br /><br />
 
             <div>
-                Nome: {{ form.name }}<br />
+                Nome: {{ fullName }}<br />
                 Deseja receber nossas novidades?: {{ form.news }}<br />
                 Linguagens: {{ form.languages }}<br />
                 Diretiva: {{ form.directive }}<br />
@@ -133,7 +134,8 @@
                     { name: "Python" },
                 ],
                 form: {
-                    name: "",
+                    firstName: "",
+                    lastName: "",
                     news: "",
                     languages: [],
                     directive: "",
@@ -169,7 +171,19 @@
                 truncate(str, length=str.length) {
                     return  str.substring(0, length) + (length < str.length ? '...' : '');
                 }
-            }
+            },
+
+            computed: {
+                fullName() {
+                    return [this.form.firstName, this.form.lastName].join(' ');
+                }
+            },
+
+            watch: {
+                title(newValue, oldValue) {
+                    console.log(`newValue ${newValue}, oldValue ${oldValue}`);
+                }
+            },
         });
     </script>
 </body>

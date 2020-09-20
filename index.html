@@ -8,6 +8,7 @@
 <body>
     <div id="app">
         <h1>{{ title }}</h1>
+
         <hr />
         <div v-if="user.id == 1">
             Id: {{ user.id }}, <br />
@@ -17,11 +18,46 @@
         <div v-else>
             Nenhum usuário encontrado.
         </div>
+
         <hr />
         <ul>
             <li v-for="item in languages">{{ item.name }}</li>
         </ul>
+
+        <hr />
+        <form>
+            <label for="name">Nome</label><br />
+            <input type="text" v-model="form.name"><br /><br />
+
+            <label for="news">Deseja receber nossas novidades?</label><br />
+            <input type="radio" value="Sim" v-model="form.news"> Sim<br />
+            <input type="radio" value="Não" v-model="form.news"> Não<br /><br />
+
+            <label for="languages">Linguagens</label><br />
+            <input type="checkbox" value="JavaScript" v-model="form.languages"> JavaScript<br />
+            <input type="checkbox" value="Java" v-model="form.languages"> Java<br />
+            <input type="checkbox" value="ShellScript" v-model="form.languages"> ShellScript<br />
+            <input type="checkbox" value="Perl" v-model="form.languages"> Perl<br />
+            <input type="checkbox" value="Python" v-model="form.languages"> Python<br /><br />
+
+            <label for="directive">Diretiva</label><br />
+            <select name="directive" v-model="form.directive">
+                <option value="">Selecione</option>
+                <option value="v-if">v-if</option>
+                <option value="v-else">v-else</option>
+                <option value="v-show">v-show</option>
+                <option value="v-model">v-model</option>
+            </select><br /><br />
+
+            <div>
+                Nome: {{ form.name }}<br />
+                Deseja receber nossas novidades?: {{ form.news }}<br />
+                Linguagens: {{ form.languages }}<br />
+                Diretiva: {{ form.directive }}<br />
+            </div>
+        </form>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var app = new Vue({
@@ -39,7 +75,13 @@
                     { name: "ShellScript" },
                     { name: "Perl" },
                     { name: "Python" },
-                ]
+                ],
+                form: {
+                    name: "",
+                    news: "",
+                    languages: [],
+                    directive: ""
+                }
             }
         });
     </script>

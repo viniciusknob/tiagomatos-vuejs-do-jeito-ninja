@@ -100,6 +100,13 @@
         <hr />
         <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
         <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
+
+        <hr />
+        <form action="https://google.com">
+            <button type="submit" class="btn btn-primary" v-on:click="enviar()">v-on:click</button>
+            <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
+            <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -141,6 +148,12 @@
                 ],
                 btnStyleEnviar: {
                     'font-size': '10px',
+                }
+            },
+
+            methods: {
+                enviar() {
+                    alert('Vue.js Methods');
                 }
             }
         });

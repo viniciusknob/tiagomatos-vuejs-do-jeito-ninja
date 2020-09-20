@@ -113,10 +113,25 @@
         <ul>
             <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
         </ul>
+
+        <hr />
+        <menu-bar></menu-bar>
     </div>
+
+    <template id="menu">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </template>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+        Vue.component('menu-bar', {
+            template: '#menu'
+        });
+
         var app = new Vue({
             el: "#app",
             data: {

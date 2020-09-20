@@ -107,6 +107,11 @@
             <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
             <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
         </form>
+
+        <hr />
+        <ul>
+            <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
+        </ul>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -154,6 +159,15 @@
             methods: {
                 enviar() {
                     alert('Vue.js Methods');
+                }
+            },
+
+            filters: {
+                toUpperCase(str) {
+                    return str.toUpperCase();
+                },
+                truncate(str, length=str.length) {
+                    return  str.substring(0, length) + (length < str.length ? '...' : '');
                 }
             }
         });

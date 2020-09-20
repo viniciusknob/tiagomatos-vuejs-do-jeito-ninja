@@ -184,6 +184,25 @@
                     console.log(`newValue ${newValue}, oldValue ${oldValue}`);
                 }
             },
+
+            beforeCreate() {
+                console.log(`beforeCreate, title: ${this.title}, $el: ${this.$el}`);
+            },
+            created() {
+                console.log(`created, title: ${this.title}, $el: ${this.$el}`);
+            },
+            beforeMount() {
+                console.log(`beforeMount, title: ${this.title}, $el: ${this.$el}`);
+            },
+            mounted() {
+                console.log(`mounted, title: ${this.title}, $el: ${this.$el}`);
+            },
+            beforeUpdate() {
+                console.log(`beforeUpdate`);
+            },
+            updated() {
+                console.log(`updated`);
+            },
         });
     </script>
 </body>

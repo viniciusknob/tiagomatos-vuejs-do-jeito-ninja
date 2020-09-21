@@ -9,78 +9,89 @@
 </head>
 <body>
     <div id="app">
-        <navbar></navbar>
-        <h1>{{ title }}</h1>
+        <div class="container">
+            <navbar></navbar>
+            <h1>{{ title }}</h1>
+    
+            <!-- Current Development -->
 
-        <hr />
-        <div v-if="user.id == 1">
-            Id: {{ user.id }}, <br />
-            Name: {{ user.name }}, <br />
-            Occupation: {{ user.occupation }}
-        </div>
-        <div v-else>
-            Nenhum usuário encontrado.
-        </div>
+            <hr />
+            <input-form></input-form>
+            <br />
+            <my-list></my-list>
+            
+            <!-- end Current Development -->
 
-        <hr />
-        <ul>
-            <li v-for="item in languages">{{ item.name }}</li>
-        </ul>
-
-        <hr />
-        <form>
-            <label for="name">Nome</label><br />
-            <input type="text" v-model="form.firstName">
-            <input type="text" v-model="form.lastName"><br /><br />
-
-            <label for="news">Deseja receber nossas novidades?</label><br />
-            <input type="radio" value="Sim" v-model="form.news"> Sim<br />
-            <input type="radio" value="Não" v-model="form.news"> Não<br /><br />
-
-            <label for="languages">Linguagens</label><br />
-            <input type="checkbox" value="JavaScript" v-model="form.languages"> JavaScript<br />
-            <input type="checkbox" value="Java" v-model="form.languages"> Java<br />
-            <input type="checkbox" value="ShellScript" v-model="form.languages"> ShellScript<br />
-            <input type="checkbox" value="Perl" v-model="form.languages"> Perl<br />
-            <input type="checkbox" value="Python" v-model="form.languages"> Python<br /><br />
-
-            <label for="directive">Diretiva</label><br />
-            <select name="directive" v-model="form.directive">
-                <option value="">Selecione</option>
-                <option value="v-if">v-if</option>
-                <option value="v-else">v-else</option>
-                <option value="v-show">v-show</option>
-                <option value="v-model">v-model</option>
-            </select><br /><br />
-
-            <div>
-                Nome: {{ fullName }}<br />
-                Deseja receber nossas novidades?: {{ form.news }}<br />
-                Linguagens: {{ form.languages }}<br />
-                Diretiva: {{ form.directive }}<br />
+            <hr />
+            <ul>
+                <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
+            </ul>
+            
+            <hr />
+            <form action="https://google.com">
+                <button type="submit" class="btn btn-primary" v-on:click="enviar()">v-on:click</button>
+                <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
+                <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
+            </form>
+            
+            <hr />
+            <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
+            <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
+            
+            <hr />
+            <img v-bind:src="imgSrc" :alt="imgAlt">
+            
+            <hr />
+            <form>
+                <label for="name">Nome</label><br />
+                <input type="text" v-model="form.firstName">
+                <input type="text" v-model="form.lastName"><br /><br />
+                
+                <label for="news">Deseja receber nossas novidades?</label><br />
+                <input type="radio" value="Sim" v-model="form.news"> Sim<br />
+                <input type="radio" value="Não" v-model="form.news"> Não<br /><br />
+                
+                <label for="languages">Linguagens</label><br />
+                <input type="checkbox" value="JavaScript" v-model="form.languages"> JavaScript<br />
+                <input type="checkbox" value="Java" v-model="form.languages"> Java<br />
+                <input type="checkbox" value="ShellScript" v-model="form.languages"> ShellScript<br />
+                <input type="checkbox" value="Perl" v-model="form.languages"> Perl<br />
+                <input type="checkbox" value="Python" v-model="form.languages"> Python<br /><br />
+                
+                <label for="directive">Diretiva</label><br />
+                <select name="directive" v-model="form.directive">
+                    <option value="">Selecione</option>
+                    <option value="v-if">v-if</option>
+                    <option value="v-else">v-else</option>
+                    <option value="v-show">v-show</option>
+                    <option value="v-model">v-model</option>
+                </select><br /><br />
+                
+                <div>
+                    Nome: {{ fullName }}<br />
+                    Deseja receber nossas novidades?: {{ form.news }}<br />
+                    Linguagens: {{ form.languages }}<br />
+                    Diretiva: {{ form.directive }}<br />
+                </div>
+            </form>
+            
+            <hr />
+            <ul>
+                <li v-for="item in languages">{{ item.name }}</li>
+            </ul>
+            
+            <hr />
+            <div v-if="user.id == 1">
+                Id: {{ user.id }}, <br />
+                Name: {{ user.name }}, <br />
+                Occupation: {{ user.occupation }}
             </div>
-        </form>
-
-        <hr />
-        <img v-bind:src="imgSrc" :alt="imgAlt">
-
-        <hr />
-        <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
-        <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
-
-        <hr />
-        <form action="https://google.com">
-            <button type="submit" class="btn btn-primary" v-on:click="enviar()">v-on:click</button>
-            <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
-            <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
-        </form>
-
-        <hr />
-        <ul>
-            <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
-        </ul>
+            <div v-else>
+                Nenhum usuário encontrado.
+            </div>
+        </div>
     </div>
-
+    
     <template id="nav">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -105,6 +116,25 @@
               <a @click.stop.prevent="emitClick(index)" 
                 class="nav-link" href="#">{{ item.label }}</a>
             </li>
+        </ul>
+    </template>
+
+    <template id="form">
+        <div class="card">
+            <div class="card-block">
+                <div class="form-group">
+                    <label for="">Título</label>
+                    <input v-model="title" type="text" class="form-control">
+                </div>
+                <button class="btn btn-primary"
+                    @click.stop.prevent="submit()">ENVIAR</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="list">
+        <ul class="list-group">
+            <li v-for="item in list" class="list-group-item">{{ item.title }}</li>
         </ul>
     </template>
 
@@ -144,6 +174,41 @@
                 }
             }
         });
+
+        Vue.component('input-form', {
+            template: '#form',
+            data() {
+                return {
+                    title: '',
+                }
+            },
+            methods: {
+                submit() {
+                    this.$eventHub.$emit('submit', this.title);
+                },
+            },
+        });
+
+        Vue.component('my-list', {
+            template: '#list',
+            created() {
+                var _this = this;
+                this.$eventHub.$on('submit', function(title) {
+                    if (title)
+                        _this.list.push({title:title});
+                });
+            },
+            data() {
+                return {
+                    list: [
+                        { title: 'One' }
+                    ]
+                }
+            }
+        });
+
+        Vue.prototype.$eventHub = new Vue();
+        var eventBus = new Vue(); // other option
 
         var app = new Vue({
             el: "#app",

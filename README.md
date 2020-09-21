@@ -6,3 +6,4 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://vuejs.org/
 * https://getbootstrap.com/docs/4.5/components/buttons/
 * https://br.vuejs.org/v2/guide/instance.html#Diagrama-do-Ciclo-de-Vida
+* https://getbootstrap.com/docs/4.5/components/navbar/

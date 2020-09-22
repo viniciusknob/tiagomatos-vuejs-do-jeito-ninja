@@ -16,12 +16,28 @@
             <!-- Current Development -->
 
             <hr />
+            <card>
+                <h4 slot="title" class="card-title">Card Title</h4>
+                <p slot="text" class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                <a slot="action" href="#" class="btn btn-primary">Go somewhere</a>
+            </card>
+            <br />
+            <card>
+                <h4 slot="title" class="card-title">Card Title 2</h4>
+                <template slot="text">
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                </template>
+                <a slot="action" href="#" class="btn btn-primary">Let's Go</a>
+            </card>
+            
+            <!-- end Current Development -->
+
+            <hr />
             <input-form></input-form>
             <br />
             <my-list></my-list>
             
-            <!-- end Current Development -->
-
             <hr />
             <ul>
                 <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
@@ -137,6 +153,16 @@
             <li v-for="item in list" class="list-group-item">{{ item.title }}</li>
         </ul>
     </template>
+    
+    <template id="card">
+        <div class="card">
+            <div class="card-block">
+                <slot name="title"></slot>
+                <slot name="text"></slot>
+                <slot name="action"></slot>
+            </div>
+        </div>
+    </template>
 
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -205,6 +231,10 @@
                     ]
                 }
             }
+        });
+
+        Vue.component('card', {
+            template: '#card',
         });
 
         Vue.prototype.$eventHub = new Vue();

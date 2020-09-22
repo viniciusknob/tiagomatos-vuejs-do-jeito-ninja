@@ -8,3 +8,5 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://br.vuejs.org/v2/guide/instance.html#Diagrama-do-Ciclo-de-Vida
 * https://getbootstrap.com/docs/4.5/components/navbar/
 * https://code.visualstudio.com/docs/editor/emmet
+* https://github.com/pagekit/vue-resource
+* https://jsonplaceholder.typicode.com/users

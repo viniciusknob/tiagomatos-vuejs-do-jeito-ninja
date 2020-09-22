@@ -16,7 +16,12 @@
             <!-- Current Development -->
 
             <br /><hr />
-            <button @click.stop.prevent="logLanguages()" class="btn btn-success">LOG LANGUAGES</button>
+            <button @click.stop.prevent="getUsers()" class="btn btn-success">GET USERS</button>
+
+            <br /><br />
+            <ul>
+                <li v-for="user in users">{{ user.name }}</li>
+            </ul>
             
             <!-- end Current Development -->
 
@@ -174,6 +179,8 @@
 
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+
     <script>
         Vue.component('navbar', {
             template: '#nav',
@@ -248,10 +255,9 @@
                 console.log(`created, mixin`);
             },
             methods: {
-                logLanguages() {
-                    this.languages.forEach(item => {
-                        console.log(item.name);
-                    });
+                getUsers() {
+                    let url = 'http://jsonplaceholder.typicode.com/users';
+                    this.$http.get(url).then(response => this.users = response.body);
                 }
             },
         };
@@ -263,6 +269,7 @@
 
             data: {
                 title: "Vue.js do Jeito Ninja",
+                users: [],
                 user: {
                     id: 1,
                     name: "Jon Snow",

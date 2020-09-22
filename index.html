@@ -15,7 +15,12 @@
     
             <!-- Current Development -->
 
-            <hr />
+            <br /><hr />
+            <button @click.stop.prevent="logLanguages()" class="btn btn-success">LOG LANGUAGES</button>
+            
+            <!-- end Current Development -->
+
+            <br /><hr />
             <card>
                 <h4 slot="title" class="card-title">Card Title</h4>
                 <p slot="text" class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
@@ -30,34 +35,32 @@
                 </template>
                 <a slot="action" href="#" class="btn btn-primary">Let's Go</a>
             </card>
-            
-            <!-- end Current Development -->
 
-            <hr />
+            <br /><hr />
             <input-form></input-form>
             <br />
             <my-list></my-list>
             
-            <hr />
+            <br /><hr />
             <ul>
                 <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
             </ul>
             
-            <hr />
+            <br /><hr />
             <form action="https://google.com">
                 <button type="submit" class="btn btn-primary" v-on:click="enviar()">v-on:click</button>
                 <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
                 <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
             </form>
             
-            <hr />
+            <br /><hr />
             <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
             <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
             
-            <hr />
+            <br /><hr />
             <img v-bind:src="imgSrc" :alt="imgAlt">
             
-            <hr />
+            <br /><hr />
             <form>
                 <label for="name">Nome</label><br />
                 <input type="text" v-model="form.firstName">
@@ -91,12 +94,12 @@
                 </div>
             </form>
             
-            <hr />
+            <br /><hr />
             <ul>
                 <li v-for="item in languages">{{ item.name }}</li>
             </ul>
             
-            <hr />
+            <br /><hr />
             <div v-if="user.id == 1">
                 Id: {{ user.id }}, <br />
                 Name: {{ user.name }}, <br />
@@ -240,8 +243,24 @@
         Vue.prototype.$eventHub = new Vue();
         var eventBus = new Vue(); // other option
 
+        var mixin = {
+            created() {
+                console.log(`created, mixin`);
+            },
+            methods: {
+                logLanguages() {
+                    this.languages.forEach(item => {
+                        console.log(item.name);
+                    });
+                }
+            },
+        };
+
         var app = new Vue({
             el: "#app",
+            
+            mixins: [mixin],
+
             data: {
                 title: "Vue.js do Jeito Ninja",
                 user: {
@@ -312,7 +331,7 @@
                 console.log(`beforeCreate, title: ${this.title}, $el: ${this.$el}`);
             },
             created() {
-                console.log(`created, title: ${this.title}, $el: ${this.$el}`);
+                console.log(`created, vue, title: ${this.title}, $el: ${this.$el}`);
             },
             beforeMount() {
                 console.log(`beforeMount, title: ${this.title}, $el: ${this.$el}`);

@@ -16,7 +16,8 @@
             <!-- Current Development -->
 
             <br /><hr />
-            <button @click.stop.prevent="getUsers()" class="btn btn-success">GET USERS</button>
+            <button @click.stop.prevent="getUsersWithVueResource()" class="btn btn-success">GET USERS (vue resource)</button>
+            <button @click.stop.prevent="getUsersWithVueAxios()" class="btn btn-success">GET USERS (vue axios)</button>
 
             <br /><br />
             <ul>
@@ -180,6 +181,7 @@
     <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
         Vue.component('navbar', {
@@ -255,10 +257,14 @@
                 console.log(`created, mixin`);
             },
             methods: {
-                getUsers() {
+                getUsersWithVueResource() {
                     let url = 'http://jsonplaceholder.typicode.com/users';
                     this.$http.get(url).then(response => this.users = response.body);
-                }
+                },
+                getUsersWithVueAxios() {
+                    let url = 'http://jsonplaceholder.typicode.com/users';
+                    axios.get(url).then(response => this.users = response.data);
+                },
             },
         };
 

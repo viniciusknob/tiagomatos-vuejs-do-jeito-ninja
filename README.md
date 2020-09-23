@@ -10,3 +10,5 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://code.visualstudio.com/docs/editor/emmet
 * https://github.com/pagekit/vue-resource
 * https://jsonplaceholder.typicode.com/users
+* https://github.com/axios/axios
+* https://br.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html

@@ -25,6 +25,15 @@
             <!-- Current Development -->
 
             <br /><hr />
+            <ul>
+                <li><router-link to="/numbers">Numbers</router-link></li>
+                <li><router-link to="/languages">Languages</router-link></li>
+            </ul>
+            <router-view></router-view>
+            
+            <!-- end Current Development -->
+
+            <br /><hr />
             <select v-model="target">
                 <option value="numbers">Numbers</option>
                 <option value="languages">Languages</option>
@@ -33,8 +42,6 @@
             <transition name="fade">
                 <omponent :is="target" :languages="languages"></omponent>
             </transition>
-            
-            <!-- end Current Development -->
 
             <br /><hr />
             <numbers></numbers>
@@ -228,6 +235,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 
     <script>
         Vue.component('navbar', {
@@ -295,7 +303,7 @@
             template: '#card',
         });
 
-        Vue.component('numbers', {
+        var Numbers = Vue.component('numbers', {
             template: '#numbers',
             data() {
                 return {
@@ -304,7 +312,7 @@
             },
         });
 
-        Vue.component('languages', {
+        var Languages = Vue.component('languages', {
             template: '#languages',
             props: {
                 languages: {
@@ -312,6 +320,13 @@
                     required: true,
                 }
             }
+        });
+
+        var router = new VueRouter({
+            routes: [
+                { path: '/numbers', component: Numbers },
+                { path: '/languages', component: Languages },
+            ]
         });
 
         Vue.prototype.$eventHub = new Vue();
@@ -343,6 +358,8 @@
 
         var app = new Vue({
             el: "#app",
+
+            router,
             
             mixins: [mixin],
 

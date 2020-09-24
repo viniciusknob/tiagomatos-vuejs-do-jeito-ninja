@@ -12,3 +12,4 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://jsonplaceholder.typicode.com/users
 * https://github.com/axios/axios
 * https://br.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+* https://vuejs.org/v2/guide/transitions.html

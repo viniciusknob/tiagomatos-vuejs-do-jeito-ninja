@@ -6,6 +6,15 @@
     <title>Vue.js do Jeito Ninja</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -16,6 +25,18 @@
             <!-- Current Development -->
 
             <br /><hr />
+            <select v-model="target">
+                <option value="numbers">Numbers</option>
+                <option value="languages">Languages</option>
+            </select>
+
+            <transition name="fade">
+                <omponent :is="target" :languages="languages"></omponent>
+            </transition>
+            
+            <!-- end Current Development -->
+
+            <br /><hr />
             <numbers></numbers>
             <component is="languages" :languages="languages"></component><!-- Anonymous Component: more flexible -->
 
@@ -23,8 +44,6 @@
             <ul ref="users">
                 <li v-for="(user, index) in users" :key="user.name">{{ user.name }} <a @click.stop.prevent="remove(index)" style="cursor: pointer;">x</a></li>
             </ul>
-            
-            <!-- end Current Development -->
 
             <br /><hr />
             <button @click.stop.prevent="getUsersWithVueResource()" class="btn btn-success">GET USERS (vue resource)</button>
@@ -329,6 +348,7 @@
 
             data: {
                 title: "Vue.js do Jeito Ninja",
+                target: "numbers",
                 users: [],
                 user: {
                     id: 1,

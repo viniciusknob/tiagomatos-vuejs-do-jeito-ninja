@@ -29,6 +29,7 @@
                 <li><router-link :to="{ name: 'numbers' }">Numbers</router-link></li>
                 <li><router-link to="/languages">Languages</router-link></li>
             </ul>
+            <br />
             <router-view></router-view>
             
             <!-- end Current Development -->
@@ -40,12 +41,12 @@
             </select>
 
             <transition name="fade">
-                <omponent :is="target" :languages="languages"></omponent>
+                <component :is="target"></component>
             </transition>
 
             <br /><hr />
             <numbers></numbers>
-            <component is="languages" :languages="languages"></component><!-- Anonymous Component: more flexible -->
+            <component is="languages"></component><!-- Anonymous Component: more flexible -->
 
             <h4>Users</h4>
             <ul ref="users">
@@ -219,10 +220,26 @@
 
     <template id="languages">
         <div>
-            <h4>Languages</h4>
-            <ul>
-                <li v-for="lang in languages">{{ lang.name }}</li>
-            </ul>
+            <div class="row">
+                <div class="col">
+                    <h4>Languages</h4>
+                    <ul>
+                        <li v-for="lang in languages">
+                            <router-link :to="{ name: 'languagesContent', param: { name: lang.slug } }">{{ lang.name }}</router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="languagesContent">
+        <div>
+            <h3>Languages Content</h3>
+            {{ $router.param.name }}
         </div>
     </template>
 
@@ -314,19 +331,32 @@
 
         var Languages = Vue.component('languages', {
             template: '#languages',
-            props: {
-                languages: {
-                    type: Array,
-                    required: true,
+            data() {
+                return {
+                    languages: [
+                        { name: "JavaScript", slug: 'javascript' },
+                        { name: "Java", slug: 'java' },
+                        { name: "ShellScript", slug: 'shellscript' },
+                        { name: "Perl", slug: 'perl' },
+                        { name: "Python", slug: 'python' },
+                    ],
                 }
             }
+        });
+
+        var LanguagesContent = Vue.component('languages-content', {
+            template: '#languagesContent',
         });
 
         var router = new VueRouter({
             //mode: 'history', // don't work locally
             routes: [
-                { path: '/numbers-mario', name: 'numbers', component: Numbers },
-                { path: '/languages', component: Languages },
+                { path: '/numbers', name: 'numbers', component: Numbers },
+                { path: '/languages', component: Languages,
+                    children: [
+                        { path: ':name', name: 'languagesContent', component: LanguagesContent },
+                    ],
+                }
             ],
         });
 
@@ -374,11 +404,11 @@
                     occupation: "Actor",
                 },
                 languages: [
-                    { name: "JavaScript" },
-                    { name: "Java" },
-                    { name: "ShellScript" },
-                    { name: "Perl" },
-                    { name: "Python" },
+                    { name: "JavaScript", slug: 'javascript' },
+                    { name: "Java", slug: 'java' },
+                    { name: "ShellScript", slug: 'shellscript' },
+                    { name: "Perl", slug: 'perl' },
+                    { name: "Python", slug: 'python' },
                 ],
                 form: {
                     firstName: "",

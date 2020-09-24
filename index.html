@@ -26,7 +26,7 @@
 
             <br /><hr />
             <ul>
-                <li><router-link to="/numbers">Numbers</router-link></li>
+                <li><router-link :to="{ name: 'numbers' }">Numbers</router-link></li>
                 <li><router-link to="/languages">Languages</router-link></li>
             </ul>
             <router-view></router-view>
@@ -323,10 +323,11 @@
         });
 
         var router = new VueRouter({
+            //mode: 'history', // don't work locally
             routes: [
-                { path: '/numbers', component: Numbers },
+                { path: '/numbers-mario', name: 'numbers', component: Numbers },
                 { path: '/languages', component: Languages },
-            ]
+            ],
         });
 
         Vue.prototype.$eventHub = new Vue();

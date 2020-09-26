@@ -22,7 +22,7 @@
 
             <div class="col-3">
                 <div class="form-group">
-                    <button class="btn btn-success" @click.stop.prevent="getIssues()">GO</button>
+                    <button class="btn btn-success" @click.stop.prevent="routerPush()">GO</button>
                     <button class="btn btn-danger" @click.stop.prevent="reset()">LIMPAR</button>
                 </div>
             </div>
@@ -65,10 +65,13 @@ import axios from 'axios';
 
 export default {
     name: 'GithubIssues',
+    created() {
+        this.getIssues();
+    },
     data() {
         return {
-            username: '',
-            repository: '',
+            username: this.$route.params.name || '',
+            repository: this.$route.params.repo || '',
             issues: [],
             loader: {
                 getIssues: false,
@@ -76,6 +79,12 @@ export default {
         };
     },
     methods: {
+        routerPush() {
+            if (this.username && this.repository) {
+                this.$router.push(`/${this.username}/${this.repository}`);
+                this.getIssues();
+            }
+        },
         reset() {
             this.username = '';
             this.repository = '';

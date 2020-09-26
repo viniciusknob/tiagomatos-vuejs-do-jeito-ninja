@@ -10,6 +10,11 @@ export default new Router({
     routes: [
         {
             path: '/',
+            name: 'Home',
+            component: GithubIssues,
+        },
+        {
+            path: '/:name/:repo',
             name: 'GithubIssues',
             component: GithubIssues,
         },

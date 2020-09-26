@@ -7,7 +7,11 @@
             <h1>Issue {{ issue.number }}</h1>
             <h3>{{ issue.title }}</h3>
             <div>{{ issue.body }}</div>
-            <a href="javascript:history.go(-1)" class="btn btn-link">Voltar</a>
+            <router-link class="btn btn-link"
+                :to="{ name: 'GithubIssues',
+                    params: { name: this.$route.params.name, repo: this.$route.params.repo } }">
+                        Voltar
+            </router-link>
         </div>
     </div>
 </template>

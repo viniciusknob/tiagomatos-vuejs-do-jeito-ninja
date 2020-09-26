@@ -1,6 +1,12 @@
 # tiagomatos-vuejs-do-jeito-ninja
 Tiago Matos - Vue.js do Jeito Ninja
 
+### Dev
+
+```shellscript
+nodemon server.js --watch index.html
+```
+
 ### Refs
 * https://www.youtube.com/playlist?list=PLcoYAcR89n-qq1vGRbaUiV6Q9puy0qigW
 * https://vuejs.org/
@@ -15,3 +21,4 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://vuejs.org/v2/guide/transitions.html
 * https://router.vuejs.org/guide
 * https://router.vuejs.org/api/#route-object-properties
+* https://www.npmjs.com/package/nodemon

@@ -221,6 +221,9 @@
     <template id="languages">
         <div>
             <div class="row">
+                <div :class="['col', sidebar]">
+                    Sidebar
+                </div>
                 <div class="col">
                     <h4>Languages</h4>
                     <ul>
@@ -339,6 +342,12 @@
 
         var Languages = Vue.component('languages', {
             template: '#languages',
+            props: {
+                sidebar: String,
+            },
+            created() {
+                console.log(this.sidebar);
+            },
             data() {
                 return {
                     languages: [
@@ -366,6 +375,7 @@
                 { path: '/', name: 'home', redirect: { name: 'languagesContent', params: { name: 'shellscript' } } },
                 { path: '/numbers', name: 'numbers', component: Numbers },
                 { path: '/languages', component: Languages,
+                    props: { sidebar: 'text-light bg-dark' },
                     children: [
                         { path: ':name', name: 'languagesContent', component: LanguagesContent },
                     ],

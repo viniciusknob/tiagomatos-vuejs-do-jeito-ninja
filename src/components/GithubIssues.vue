@@ -50,9 +50,10 @@
                 </tr>
                 <tr v-for="issue in issues" :key="issue.number">
                     <td>
-                        <a @click.stop.prevent="getIssue(issue.number)" href="">
+                        <a @click.stop.prevent="getIssue(issue)" href="">
                             {{ issue.number }}
                         </a>
+                        <img v-if="issue.is_loading" src="/static/loading.svg" height="20" />
                     </td>
                     <td>{{ issue.title }}</td>
                 </tr>
@@ -77,7 +78,6 @@ export default {
             selectedIssue: {},
             loader: {
                 getIssues: false,
-                getIssue: false,
             },
         };
     },
@@ -100,16 +100,16 @@ export default {
                     });
             }
         },
-        getIssue(issueId) {
+        getIssue(issue) {
             if (this.username && this.repository) {
-                this.loader.getIssue = true;
+                this.$set(issue, 'is_loading', true);
                 const domain = 'https://api.github.com';
-                const url = `${domain}/repos/${this.username}/${this.repository}/issues/${issueId}`;
+                const url = `${domain}/repos/${this.username}/${this.repository}/issues/${issue.number}`;
                 axios.get(url)
                     // eslint-disable-next-line no-return-assign
                     .then(response => this.selectedIssue = response.data)
                     .finally(() => {
-                        this.loader.getIssue = false;
+                        this.$set(issue, 'is_loading', false);
                     });
             }
         },

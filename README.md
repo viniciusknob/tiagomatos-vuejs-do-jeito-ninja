@@ -14,3 +14,4 @@ Tiago Matos - Vue.js do Jeito Ninja
 * https://br.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
 * https://vuejs.org/v2/guide/transitions.html
 * https://router.vuejs.org/guide
+* https://router.vuejs.org/api/#route-object-properties

@@ -225,7 +225,7 @@
                     <h4>Languages</h4>
                     <ul>
                         <li v-for="lang in languages">
-                            <router-link :to="{ name: 'languagesContent', param: { name: lang.slug } }">{{ lang.name }}</router-link>
+                            <router-link :to="{ name: 'languagesContent', params: { name: lang.slug } }">{{ lang.name }}</router-link>
                         </li>
                     </ul>
                 </div>
@@ -239,7 +239,15 @@
     <template id="languagesContent">
         <div>
             <h3>Languages Content</h3>
-            {{ $router.param.name }}
+            {{ $route.params.name }}
+        </div>
+    </template>
+
+    <template id="http404">
+        <div>
+            <h1>Página não encontrada.</h1>
+            <p>Ops! A página que você tentou acessar não existe.</p>
+            <p>{{ $route.path }}</p>
         </div>
     </template>
 
@@ -334,11 +342,11 @@
             data() {
                 return {
                     languages: [
-                        { name: "JavaScript", slug: 'javascript' },
-                        { name: "Java", slug: 'java' },
-                        { name: "ShellScript", slug: 'shellscript' },
-                        { name: "Perl", slug: 'perl' },
-                        { name: "Python", slug: 'python' },
+                        { name: "JavaScript", slug: "javascript" },
+                        { name: "Java", slug: "java" },
+                        { name: "ShellScript", slug: "shellscript" },
+                        { name: "Perl", slug: "perl" },
+                        { name: "Python", slug: "python" },
                     ],
                 }
             }
@@ -348,15 +356,21 @@
             template: '#languagesContent',
         });
 
+        var HTTP404 = Vue.component('http-404', {
+            template: '#http404',
+        });
+
         var router = new VueRouter({
-            //mode: 'history', // don't work locally
+            mode: 'history',
             routes: [
+                { path: '/', name: 'home', redirect: { name: 'languagesContent', params: { name: 'shellscript' } } },
                 { path: '/numbers', name: 'numbers', component: Numbers },
                 { path: '/languages', component: Languages,
                     children: [
                         { path: ':name', name: 'languagesContent', component: LanguagesContent },
                     ],
-                }
+                },
+                { path: '*', name: 'http404', component: HTTP404 },
             ],
         });
 
@@ -364,9 +378,6 @@
         var eventBus = new Vue(); // other option
 
         var mixin = {
-            created() {
-                console.log(`created, mixin`);
-            },
             mounted() {
                 console.log(`mounted, title: ${this.title}, $el: ${this.$el}`);
                 this.getUsersWithVueAxios();
@@ -391,6 +402,10 @@
             el: "#app",
 
             router,
+
+            mounted() {
+                //this.$router.push({ name: 'languagesContent', params: { name: 'shellscript' } });
+            },
             
             mixins: [mixin],
 

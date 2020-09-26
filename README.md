@@ -4,6 +4,8 @@
 
 Curso Vue.js 2.0
 * https://www.youtube.com/playlist?list=PLcoYAcR89n-qq1vGRbaUiV6Q9puy0qigW
+* https://github.com/tiagomatosweb/vuejs-github-issues
+
 
 ## Dev
 
@@ -57,3 +59,6 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 * https://www.npmjs.com/package/nodemon
 * https://cli.vuejs.org/
 * https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui
+* https://github.com/diegohaz/arc/issues/171
+* https://github.com/tiagomatosweb/vuejs-github-issues
+* https://github.com/tiagomatosweb/vuejs-github-issues/blob/91b9b0ee91ff2e5bde0ef1f3d03eee250267bf07/src/components/GitHubIssues.vue

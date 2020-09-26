@@ -8,20 +8,22 @@
         <div class="row">
             <div class="col">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="github username">
+                    <input v-model="username"
+                        type="text" class="form-control" placeholder="github username">
                 </div>
             </div>
 
             <div class="col">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="github repositório">
+                    <input v-model="repository"
+                        type="text" class="form-control" placeholder="github repositório">
                 </div>
             </div>
 
             <div class="col-3">
                 <div class="form-group">
-                    <button class="btn btn-success">GO</button>
-                    <button class="btn btn-danger">LIMPAR</button>
+                    <button class="btn btn-success" @click.stop.prevent="getIssues()">GO</button>
+                    <button class="btn btn-danger" @click.stop.prevent="reset()">LIMPAR</button>
                 </div>
             </div>
         </div>
@@ -37,21 +39,45 @@
             </thead>
 
             <tbody>
-            <tr>
-                <td class="text-center" colspan="2">Nenhuma issues encontrada!</td>
-            </tr>
+                <tr v-if="!!issues.length" v-for="issue in issues" :key="issue.number">
+                    <td>{{ issue.number }}</td>
+                    <td>{{ issue.title }}</td>
+                </tr>
+                <tr v-if="!!!issues.length">
+                    <td class="text-center" colspan="2">Nenhuma issues encontrada!</td>
+                </tr>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
     name: 'GithubIssues',
     data() {
-        return {};
+        return {
+            username: '',
+            repository: '',
+            issues: [],
+        };
     },
-    methods: {},
+    methods: {
+        reset() {
+            this.username = '';
+            this.repository = '';
+        },
+        getIssues() {
+            if (this.username && this.repository) {
+                const domain = 'https://api.github.com';
+                const url = `${domain}/repos/${this.username}/${this.repository}/issues`;
+                axios.get(url)
+                    // eslint-disable-next-line no-return-assign
+                    .then(response => this.issues = response.data);
+            }
+        },
+    },
 };
 </script>
 

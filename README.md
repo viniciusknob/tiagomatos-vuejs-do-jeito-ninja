@@ -1,13 +1,46 @@
 # tiagomatos-vuejs-do-jeito-ninja
-Tiago Matos - Vue.js do Jeito Ninja
 
-### Dev
+> A Vue.js project
 
-```shellscript
-nodemon server.js --watch index.html
+Curso Vue.js 2.0
+* https://www.youtube.com/playlist?list=PLcoYAcR89n-qq1vGRbaUiV6Q9puy0qigW
+
+## Dev
+
+Até vídeo nº 27:
+```bash
+# serve localhost:3000
+nodemon server.js --watch prev_index.html
 ```
 
-### Refs
+A partir do vídeo nº 28:
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
+
+# run unit tests
+npm run unit
+
+# run e2e tests
+npm run e2e
+
+# run all tests
+npm test
+```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+
+## Refs
 * https://www.youtube.com/playlist?list=PLcoYAcR89n-qq1vGRbaUiV6Q9puy0qigW
 * https://vuejs.org/
 * https://getbootstrap.com/docs/4.5/components/buttons/
@@ -22,3 +55,5 @@ nodemon server.js --watch index.html
 * https://router.vuejs.org/guide
 * https://router.vuejs.org/api/#route-object-properties
 * https://www.npmjs.com/package/nodemon
+* https://cli.vuejs.org/
+* https://cli.vuejs.org/guide/creating-a-project.html#using-the-gui

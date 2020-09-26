@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.js do Jeito Ninja</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <style>
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity .5s;
+        }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <navbar></navbar>
+            <h1>{{ title }}</h1>
+    
+            <!-- Current Development -->
+
+            <br /><hr />
+            <ul>
+                <li><router-link :to="{ name: 'numbers' }">Numbers</router-link></li>
+                <li><router-link to="/languages">Languages</router-link></li>
+            </ul>
+            <br />
+            <router-view></router-view>
+            
+            <!-- end Current Development -->
+
+            <br /><hr />
+            <select v-model="target">
+                <option value="numbers">Numbers</option>
+                <option value="languages">Languages</option>
+            </select>
+
+            <transition name="fade">
+                <component :is="target"></component>
+            </transition>
+
+            <br /><hr />
+            <numbers></numbers>
+            <component is="languages"></component><!-- Anonymous Component: more flexible -->
+
+            <h4>Users</h4>
+            <ul ref="users">
+                <li v-for="(user, index) in users" :key="user.name">{{ user.name }} <a @click.stop.prevent="remove(index)" style="cursor: pointer;">x</a></li>
+            </ul>
+
+            <br /><hr />
+            <button @click.stop.prevent="getUsersWithVueResource()" class="btn btn-success">GET USERS (vue resource)</button>
+            <button @click.stop.prevent="getUsersWithVueAxios()" class="btn btn-success">GET USERS (vue axios)</button>
+
+            <br /><br />
+            <ul>
+                <li v-for="user in users">{{ user.name }}</li>
+            </ul>
+
+            <br /><hr />
+            <card>
+                <h4 slot="title" class="card-title">Card Title</h4>
+                <p slot="text" class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                <a slot="action" href="#" class="btn btn-primary">Go somewhere</a>
+            </card>
+            <br />
+            <card>
+                <h4 slot="title" class="card-title">Card Title 2</h4>
+                <template slot="text">
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam hendrerit rhoncus metus ac viverra. In faucibus in urna in pharetra. Duis rutrum accumsan velit, ut dictum quam auctor sed.</p>
+                </template>
+                <a slot="action" href="#" class="btn btn-primary">Let's Go</a>
+            </card>
+
+            <br /><hr />
+            <input-form></input-form>
+            <br />
+            <my-list></my-list>
+            
+            <br /><hr />
+            <ul>
+                <li v-for="lang in languages">{{ lang.name | toUpperCase() | truncate(4) }}</li>
+            </ul>
+            
+            <br /><hr />
+            <form action="https://google.com">
+                <button type="submit" class="btn btn-primary" v-on:click="enviar()">v-on:click</button>
+                <button type="submit" class="btn btn-primary" v-on:click.prevent.stop="enviar()">v-on:click.prevent.stop</button>
+                <button type="submit" class="btn btn-primary" @click.prevent.stop="enviar()">@click.prevent.stop</button>
+            </form>
+            
+            <br /><hr />
+            <button class="btn" :class="btnClassLimpar" :style="btnStyleLimpar">LIMPAR</button>
+            <button class="btn" :class="btnClassEnviar" :style="btnStyleEnviar">ENVIAR</button>
+            
+            <br /><hr />
+            <img v-bind:src="imgSrc" :alt="imgAlt">
+            
+            <br /><hr />
+            <form>
+                <label for="name">Nome</label><br />
+                <input type="text" v-model="form.firstName">
+                <input type="text" v-model="form.lastName"><br /><br />
+                
+                <label for="news">Deseja receber nossas novidades?</label><br />
+                <input type="radio" value="Sim" v-model="form.news"> Sim<br />
+                <input type="radio" value="Não" v-model="form.news"> Não<br /><br />
+                
+                <label for="languages">Linguagens</label><br />
+                <input type="checkbox" value="JavaScript" v-model="form.languages"> JavaScript<br />
+                <input type="checkbox" value="Java" v-model="form.languages"> Java<br />
+                <input type="checkbox" value="ShellScript" v-model="form.languages"> ShellScript<br />
+                <input type="checkbox" value="Perl" v-model="form.languages"> Perl<br />
+                <input type="checkbox" value="Python" v-model="form.languages"> Python<br /><br />
+                
+                <label for="directive">Diretiva</label><br />
+                <select name="directive" v-model="form.directive">
+                    <option value="">Selecione</option>
+                    <option value="v-if">v-if</option>
+                    <option value="v-else">v-else</option>
+                    <option value="v-show">v-show</option>
+                    <option value="v-model">v-model</option>
+                </select><br /><br />
+                
+                <div>
+                    Nome: {{ fullName }}<br />
+                    Deseja receber nossas novidades?: {{ form.news }}<br />
+                    Linguagens: {{ form.languages }}<br />
+                    Diretiva: {{ form.directive }}<br />
+                </div>
+            </form>
+            
+            <br /><hr />
+            <ul>
+                <li v-for="item in languages">{{ item.name }}</li>
+            </ul>
+            
+            <br /><hr />
+            <div v-if="user.id == 1">
+                Id: {{ user.id }}, <br />
+                Name: {{ user.name }}, <br />
+                Occupation: {{ user.occupation }}
+            </div>
+            <div v-else>
+                Nenhum usuário encontrado.
+            </div>
+        </div>
+    </div>
+    
+    <template id="nav">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <menu-bar v-bind:items="topNav" v-on:emit-click="getLink"></menu-bar>
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
+    </template>
+
+    <template id="menu">
+        <ul class="navbar-nav mr-auto">
+            <li v-for="(item, index) in items"
+                class="nav-item">
+              <a @click.stop.prevent="emitClick(index)" 
+                class="nav-link" href="#">{{ item.label }}</a>
+            </li>
+        </ul>
+    </template>
+
+    <template id="form">
+        <div class="card">
+            <div class="card-block">
+                <div class="form-group">
+                    <label for="">Título</label>
+                    <input v-model="title" type="text" class="form-control">
+                </div>
+                <button class="btn btn-primary"
+                    @click.stop.prevent="submit()">ENVIAR</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="list">
+        <ul class="list-group">
+            <li v-for="item in list" class="list-group-item">{{ item.title }}</li>
+        </ul>
+    </template>
+    
+    <template id="card">
+        <div class="card">
+            <div class="card-block">
+                <slot name="title"></slot>
+                <slot name="text"></slot>
+                <slot name="action"></slot>
+            </div>
+        </div>
+    </template>
+
+    <template id="numbers">
+        <div>
+            <h4>Numbers</h4>
+            <ul>
+                <li v-for="n in numbers">{{ n }}</li>
+            </ul>
+        </div>
+    </template>
+
+    <template id="languages">
+        <div>
+            <div class="row">
+                <div :class="['col', sidebar]">
+                    Sidebar
+                </div>
+                <div class="col">
+                    <h4>Languages</h4>
+                    <ul>
+                        <li v-for="lang in languages">
+                            <router-link :to="{ name: 'languagesContent', params: { name: lang.slug } }">{{ lang.name }}</router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <router-view></router-view>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="languagesContent">
+        <div>
+            <h3>Languages Content</h3>
+            {{ $route.params.name }}
+        </div>
+    </template>
+
+    <template id="http404">
+        <div>
+            <h1>Página não encontrada.</h1>
+            <p>Ops! A página que você tentou acessar não existe.</p>
+            <p>{{ $route.path }}</p>
+        </div>
+    </template>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        Vue.component('navbar', {
+            template: '#nav',
+            data() {
+                return {
+                    topNav: [{ label: 'Home'}, { label: 'Link'}, { label: 'Disabled'}], // send data to child
+                }
+            },
+            methods: { // receive data from child
+                getLink(index) {
+                    alert(this.topNav[index].label);
+                }
+            }
+        });
+        
+        Vue.component('menu-bar', {
+            template: '#menu',
+            props: { // receive data from parent
+                items: {
+                    type: Array,
+                    required: true,
+                }
+            },
+            methods: { // send data to parent
+                emitClick(index) {
+                    this.$emit('emit-click', index);
+                }
+            }
+        });
+
+        Vue.component('input-form', {
+            template: '#form',
+            data() {
+                return {
+                    title: '',
+                }
+            },
+            methods: {
+                submit() {
+                    this.$eventHub.$emit('submit', this.title);
+                },
+            },
+        });
+
+        Vue.component('my-list', {
+            template: '#list',
+            created() {
+                var _this = this;
+                this.$eventHub.$on('submit', function(title) {
+                    if (title)
+                        _this.list.push({title:title});
+                });
+            },
+            data() {
+                return {
+                    list: [
+                        { title: 'One' }
+                    ]
+                }
+            }
+        });
+
+        Vue.component('card', {
+            template: '#card',
+        });
+
+        var Numbers = Vue.component('numbers', {
+            template: '#numbers',
+            data() {
+                return {
+                    numbers: [ 1, 2, 3, 4, 5 ],
+                };
+            },
+        });
+
+        var Languages = Vue.component('languages', {
+            template: '#languages',
+            props: {
+                sidebar: String,
+            },
+            created() {
+                console.log(this.sidebar);
+            },
+            data() {
+                return {
+                    languages: [
+                        { name: "JavaScript", slug: "javascript" },
+                        { name: "Java", slug: "java" },
+                        { name: "ShellScript", slug: "shellscript" },
+                        { name: "Perl", slug: "perl" },
+                        { name: "Python", slug: "python" },
+                    ],
+                }
+            }
+        });
+
+        var LanguagesContent = Vue.component('languages-content', {
+            template: '#languagesContent',
+        });
+
+        var HTTP404 = Vue.component('http-404', {
+            template: '#http404',
+        });
+
+        var router = new VueRouter({
+            mode: 'history',
+            routes: [
+                { path: '/', name: 'home', redirect: { name: 'languagesContent', params: { name: 'shellscript' } } },
+                { path: '/numbers', name: 'numbers', component: Numbers },
+                { path: '/languages', component: Languages,
+                    props: { sidebar: 'text-light bg-dark' },
+                    children: [
+                        { path: ':name', name: 'languagesContent', component: LanguagesContent },
+                    ],
+                },
+                { path: '*', name: 'http404', component: HTTP404 },
+            ],
+        });
+
+        Vue.prototype.$eventHub = new Vue();
+        var eventBus = new Vue(); // other option
+
+        var mixin = {
+            mounted() {
+                console.log(`mounted, title: ${this.title}, $el: ${this.$el}`);
+                this.getUsersWithVueAxios();
+                console.log(this.$refs);
+            },
+            methods: {
+                getUsersWithVueResource() {
+                    let url = 'http://jsonplaceholder.typicode.com/users';
+                    this.$http.get(url).then(response => this.users = response.body);
+                },
+                getUsersWithVueAxios() {
+                    let url = 'http://jsonplaceholder.typicode.com/users';
+                    axios.get(url).then(response => this.users = response.data);
+                },
+                remove(index) {
+                    this.users.splice(index, 1);
+                },
+            },
+        };
+
+        var app = new Vue({
+            el: "#app",
+
+            router,
+
+            mounted() {
+                //this.$router.push({ name: 'languagesContent', params: { name: 'shellscript' } });
+            },
+            
+            mixins: [mixin],
+
+            data: {
+                title: "Vue.js do Jeito Ninja",
+                target: "numbers",
+                users: [],
+                user: {
+                    id: 1,
+                    name: "Jon Snow",
+                    occupation: "Actor",
+                },
+                languages: [
+                    { name: "JavaScript", slug: 'javascript' },
+                    { name: "Java", slug: 'java' },
+                    { name: "ShellScript", slug: 'shellscript' },
+                    { name: "Perl", slug: 'perl' },
+                    { name: "Python", slug: 'python' },
+                ],
+                form: {
+                    firstName: "",
+                    lastName: "",
+                    news: "",
+                    languages: [],
+                    directive: "",
+                },
+                imgSrc: "https://vuejs.org/images/logo.png",
+                imgAlt: "Vue.js Logo",
+                btnClassLimpar: {
+                    'btn-danger': true,
+                    'btn-sm': true,
+                },
+                btnClassEnviar: [
+                    'btn-primary', { 'btn-lg': false },
+                ],
+                btnStyleLimpar: [
+                    { 'font-size': '50px' },
+                    { 'text-transform': 'lowercase' },
+                ],
+                btnStyleEnviar: {
+                    'font-size': '10px',
+                }
+            },
+
+            methods: {
+                enviar() {
+                    alert('Vue.js Methods');
+                }
+            },
+
+            filters: {
+                toUpperCase(str) {
+                    return str.toUpperCase();
+                },
+                truncate(str, length=str.length) {
+                    return  str.substring(0, length) + (length < str.length ? '...' : '');
+                }
+            },
+
+            computed: {
+                fullName() {
+                    return [this.form.firstName, this.form.lastName].join(' ');
+                }
+            },
+
+            watch: {
+                title(newValue, oldValue) {
+                    console.log(`newValue ${newValue}, oldValue ${oldValue}`);
+                }
+            },
+
+            beforeCreate() {
+                console.log(`beforeCreate, title: ${this.title}, $el: ${this.$el}`);
+            },
+            created() {
+                console.log(`created, vue, title: ${this.title}, $el: ${this.$el}`);
+            },
+            beforeMount() {
+                console.log(`beforeMount, title: ${this.title}, $el: ${this.$el}`);
+            },
+            beforeUpdate() {
+                console.log(`beforeUpdate`);
+            },
+            updated() {
+                console.log(`updated`);
+            },
+        });
+    </script>
+</body>
+</html>

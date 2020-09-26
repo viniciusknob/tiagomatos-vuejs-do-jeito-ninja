@@ -28,9 +28,13 @@
             </div>
         </div>
 
-        <br><hr><br>
+        <div v-if="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+        </div>
 
-        <table class="table table-sm table-bordered">
+        <br><br>
+
+        <table v-if="!errorMessage" class="table table-sm table-bordered">
             <thead>
             <tr>
                 <th width="100">Número</th>
@@ -52,7 +56,7 @@
                     </td>
                     <td>{{ issue.title }}</td>
                 </tr>
-                <tr v-if="!!!this.issues.length && !this.loader.getIssues">
+                <tr v-if="issueNotFound">
                     <td class="text-center" colspan="2">Nenhuma issue encontrada!</td>
                 </tr>
             </tbody>
@@ -73,10 +77,16 @@ export default {
             username: this.$route.params.name || '',
             repository: this.$route.params.repo || '',
             issues: [],
+            errorMessage: '',
             loader: {
                 getIssues: false,
             },
         };
+    },
+    computed: {
+        issueNotFound() {
+            return !this.issues.length && !this.loader.getIssues;
+        },
     },
     methods: {
         routerPush() {
@@ -93,11 +103,16 @@ export default {
             if (this.username && this.repository) {
                 this.loader.getIssues = true;
                 this.issues = [];
+                this.errorMessage = '';
                 const domain = 'https://api.github.com';
                 const url = `${domain}/repos/${this.username}/${this.repository}/issues`;
                 axios.get(url)
-                    // eslint-disable-next-line no-return-assign
-                    .then(response => this.issues = response.data)
+                    .then((response) => {
+                        this.issues = response.data;
+                    })
+                    .catch((error) => {
+                        this.errorMessage = error.message;
+                    })
                     .finally(() => {
                         this.loader.getIssues = false;
                     });
